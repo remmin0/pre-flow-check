@@ -3,7 +3,7 @@
  * App shell: cache-first with a versioned cache (bump VERSION on every release).
  * Google Fonts: stale-while-revalidate, so fonts work offline after the first online visit.
  */
-const VERSION = 'pfc-v1';
+const VERSION = 'pfc-v2';
 const SHELL = [
   './',
   './index.html',

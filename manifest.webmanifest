@@ -7,8 +7,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#F6F1E7",
-  "theme_color": "#F6F1E7",
+  "background_color": "#0D0B12",
+  "theme_color": "#0D0B12",
   "lang": "zh-Hant-TW",
   "categories": ["productivity", "health", "lifestyle"],
   "icons": [

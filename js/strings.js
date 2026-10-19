@@ -1,7 +1,8 @@
 /*
  * Pre-Flow Check — all UI copy, one object per language.
  * Keys are looked up with PFC.t('dot.path', { vars }). Arrays are allowed.
- * Card titles are intentionally bilingual in both languages (part of the card design).
+ * Copy is deliberately short: one idea per screen, a few words per line.
+ * Card titles stay bilingual in both languages (part of the card design).
  */
 (function (root) {
   'use strict';
@@ -14,11 +15,11 @@
       disclaimer: '本工具僅供個人自我觀察，非醫療或診斷用途。',
       langToggle: 'EN',
       langToggleLabel: 'Switch to English',
-      storageWarning: '無法存取瀏覽器儲存空間（可能是私密瀏覽模式或空間已滿）。App 仍可使用，但資料不會被保存，請記得匯出備份。',
+      storageWarning: '無法存取瀏覽器儲存空間，資料不會被保存。記得匯出備份。',
       next: '下一步',
-      back: '上一步',
-      home: '首頁',
+      back: '返回',
       close: '關閉',
+      skip: '略過',
       cancel: '取消',
       save: '儲存',
       today: '今天',
@@ -26,30 +27,31 @@
       minutes: '{m} 分鐘',
       device: { touch: '觸控', keyboard: '鍵盤', mouse: '滑鼠' },
 
+      nav: { home: '首頁', history: '歷史', log: '記錄心流', settings: '設定與資料' },
+
+      welcome: {
+        slides: [
+          { t: '開工前，先看看自己', s: '只要 4 分鐘' },
+          { t: '3 個感覺 + 1 個反應', s: '點一點，玩一下' },
+          { t: '抽三張牌', s: '拿到今日指引' }
+        ],
+        start: '開始',
+        label: '導覽'
+      },
+
       homeView: {
-        title: '心流羅盤',
-        subtitle: 'Pre-Flow Check',
-        intro: '開工前花 4 分鐘，量一量此刻的狀態，看看現在適不適合進入心流。',
+        ask: '準備好了嗎？',
         start: '開始今日測量',
-        logFlow: '記錄心流',
-        history: '歷史',
-        settings: '設定與資料',
         baselineBuilding: '基線建立中 {n} / {total}',
-        baselineReady: '基線已建立 · 以最近 {n} 次為準',
-        baselineDevice: '（{device}）',
-        latest: '最近一次：{when} · 準備指數 {index}',
-        empty: '還沒有紀錄。第一次測量之後，這條地平線會開始畫出你的狀態起伏。',
-        reminder: '{when} 的測量還沒有記錄心流。專注結束了嗎？',
-        reminderBtn: '現在記錄',
-        timerRunning: '專注計時中 · 剩 {time}',
-        timerDone: '專注時間結束了，記錄一下這次的心流吧。',
-        timerOpen: '查看計時',
-        horizonLabel: '你過去的準備指數起伏，小人站在最近一次。'
+        baselineReady: '基線已建立',
+        last: '上次 {index}',
+        reminder: '上次還沒記錄心流',
+        timerRunning: '專注中 · {time}',
+        timerDone: '專注結束 · 記錄一下'
       },
 
       step: {
-        label: '第 {n} 步 / 共 4 步',
-        s1Title: '此刻的你',
+        label: '第 {n} 步 / 共 {total} 步',
         kssQ: '現在有多想睡？',
         kss: {
           1: '極度清醒',
@@ -60,77 +62,70 @@
         },
         energyQ: '我現在的精神/能量是幾分？',
         tensionQ: '我現在的緊張、煩躁或焦慮是幾分？',
-        low: '1 很低',
-        high: '10 很高',
-        needAll: '三題都選好就能前往下一步。',
-        s2Title: '今天的背景',
-        s2Hint: '每一項都可以略過。',
-        sleep: '昨晚睡了幾小時',
-        wake: '今天幾點起床',
+        low: '很低',
+        high: '很高',
+        ctxTitle: '今天的狀態',
+        ctxHint: '都可以略過',
+        sleep: '昨晚睡了',
+        hoursUnit: '小時',
+        task: '接下來做什麼？',
+        more: '更多',
+        wake: '起床時間',
         awake: '已清醒 {h} 小時',
-        caffeine: '今天喝了幾杯含咖啡因飲料',
-        lastCup: '最後一杯的時間',
-        wearable: '穿戴裝置數據（選填）',
-        hrv: 'HRV（毫秒）',
-        rhr: '靜止心率（bpm）',
-        readiness: '裝置準備度分數（0–100）',
-        task: '接下來要做的事',
-        outOfRange: '超出範圍，這項不會被儲存',
+        caffeine: '咖啡因',
+        cupsUnit: '杯',
+        lastCup: '最後一杯',
+        hrv: 'HRV（ms）',
+        rhr: '靜止心率',
+        readiness: '裝置準備度',
+        outOfRange: '超出範圍',
         decrease: '減少',
         increase: '增加',
-        clear: '清除',
-        s3Title: '反應測驗',
-        s3Intro: '接下來 3 分鐘，畫面中央會不定時出現一個黃色圓圈，裡面的數字會從 0 開始跳。',
-        s3How: '一看到就盡快點擊畫面任何地方，或按空白鍵。',
-        s3Tip1: '找個安靜的地方，測驗期間不要切換 App 或分頁。',
-        s3Tip2: '圓圈出現前就按，會算作「搶先」。',
-        s3Tip3: '測驗中只會看到上方一條細細的進度條。',
-        s3Start: '開始測驗',
-        s3Fast: '（測試模式：縮短為 {s} 秒）'
+        pvtTitle: '看到黃點，立刻點',
+        pvtSub: '3 分鐘 · 點任何地方，或按空白鍵',
+        pvtNote: '太早按算搶先 · 別切換 App',
+        pvtStart: '開始',
+        fast: '測試模式：{s} 秒'
       },
 
       task: { deep: '深度思考', creative: '創作', learning: '學習', admin: '行政雜務', other: '其他' },
 
       pvt: {
         tooEarly: '太早了！',
-        noResponse: '沒有反應，繼續…',
+        noResponse: '沒反應，繼續…',
         progress: '測驗進度',
-        surfaceLabel: '反應測驗區：看到黃色圓圈就點擊或按空白鍵',
-        interruptedTitle: '測驗被中斷了',
-        interruptedBody: '切換 App、分頁或離開畫面會讓計時不準，所以這次結果已標記為無效。',
-        retest: '重新測驗',
-        skip: '略過，只用主觀評分',
-        saving: '正在計算…'
+        surfaceLabel: '反應測驗：看到黃點就點擊或按空白鍵',
+        interruptedTitle: '測驗中斷了',
+        interruptedBody: '離開畫面會讓計時不準。',
+        retest: '重測',
+        skip: '只用感覺評分',
+        saving: '洗牌中…'
       },
 
       result: {
         prompt: '深呼吸，依序點開三張牌',
         cardBack: '第 {n} 張牌，點擊翻開',
-        cardLocked: '第 {n} 張牌（請先翻開前一張）',
-        titleAria: 'Pre-Flow Check 結果',
-        sessionNo: 'No. {n}',
-        archetypeLabel: '狀態原型',
-        readinessLabel: '準備指數',
-        guidanceLabel: '今日指引',
+        cardLocked: '第 {n} 張牌（先翻前一張）',
+        titleAria: '今日三張牌',
         energyTension: '能量 {e} · 緊張 {t}',
         slower: '反應速度比你平常慢 {p}%',
         faster: '反應速度比你平常快 {p}%',
         same: '反應速度和你平常差不多',
-        lapsesLine: '失誤（≥355 ms）{n} 次，你平常約 {m} 次',
+        lapsesLine: '失誤 {n} 次 · 平常約 {m}',
         provisional: '暫定，基線建立中',
-        provisionalHint: '目前只根據主觀評分估算。再完成 {k} 次{device}測量，就會改用你的個人基線。',
-        invalidPvt: '這次反應測驗無效，指數只根據主觀評分。',
-        breatheBtn: '開始 2 分鐘呼吸',
+        provisionalHint: '再 {k} 次{device}測量就準了',
+        invalidPvt: '反應測驗無效，只看感覺',
+        breatheBtn: '先呼吸 2 分鐘',
         details: '詳細數據',
-        rtChart: '反應時間分布',
-        rtChartDesc: '每一條代表落在該區間的反應次數；355 ms 右側為失誤。',
+        rtChart: '反應時間',
+        rtChartDesc: '355 ms 右側為失誤',
         lapseZone: '失誤 ≥355',
         count: '{n} 次',
         metric: '項目',
         todayCol: '今天',
-        baselineCol: '你的基線',
-        diffCol: '相對基線',
-        afterBaseline: '基線建立後顯示',
+        baselineCol: '平常',
+        diffCol: '差異',
+        afterBaseline: '基線後顯示',
         better: '較好',
         worse: '較差',
         similar: '持平',
@@ -138,31 +133,15 @@
         logFlow: '記錄心流',
         backHistory: '回到歷史',
         backHome: '回首頁',
-        pvtSummary: '有效反應 {n} 次 · 搶先 {f} 次',
-        weightsUsed: '計入指數的項目'
+        pvtSummary: '有效 {n} 次 · 搶先 {f} 次',
+        weightsUsed: '計入指數'
       },
 
       archetype: {
-        calmFire: {
-          zh: '平靜之火', en: 'THE CALM FIRE',
-          tag: '高能量、低緊張：最適合進入心流',
-          desc: '有精神又不慌張，是最容易沉浸進去的狀態。'
-        },
-        storm: {
-          zh: '風暴', en: 'THE STORM',
-          tag: '高能量、高緊張：有力量，但容易分心',
-          desc: '能量很足，但緊繃感會把注意力往外拉。先讓心跳慢下來。'
-        },
-        stillLake: {
-          zh: '靜湖', en: 'THE STILL LAKE',
-          tag: '低能量、低緊張：放鬆，但有點遲緩',
-          desc: '心很平靜，只是引擎還沒熱。動一動、補點水再開始。'
-        },
-        fog: {
-          zh: '迷霧', en: 'THE FOG',
-          tag: '低能量、高緊張：疲倦又煩躁',
-          desc: '累了又不安穩，硬撐通常事倍功半。先照顧好自己。'
-        }
+        calmFire: { zh: '平靜之火', en: 'THE CALM FIRE', tag: '最適合心流', desc: '有精神，不慌張。' },
+        storm: { zh: '風暴', en: 'THE STORM', tag: '有力量，但容易分心', desc: '能量足，先讓心慢下來。' },
+        stillLake: { zh: '靜湖', en: 'THE STILL LAKE', tag: '放鬆，但有點遲緩', desc: '心很靜，引擎還沒熱。' },
+        fog: { zh: '迷霧', en: 'THE FOG', tag: '疲倦又煩躁', desc: '先照顧好自己。' }
       },
 
       cards: {
@@ -173,36 +152,34 @@
       rec: {
         deep: {
           main: '適合挑戰最困難的深度工作，現在就開始，記得關閉通知。',
-          actions: ['把最難的那件事排在第一個', '關閉通知，手機放到視線外', '先寫下這段專注要完成的一個具體成果']
+          actions: ['最難的先做', '關通知', '寫下一個目標']
         },
         breathe: {
-          main: '狀態很好但有點緊繃。先做 2 分鐘慢呼吸（吸氣 4 秒、吐氣 6 秒），再開始深度工作。',
-          actions: ['跟著呼吸動畫做 2 分鐘', '把讓你掛心的事寫下來，暫時放一邊', '然後從最重要的任務開始']
+          main: '狀態好但緊繃。先慢呼吸 2 分鐘（吸 4 秒、吐 6 秒）。',
+          actions: ['呼吸 2 分鐘', '寫下煩心事', '再開始']
         },
         steady: {
-          main: '適合中等難度的任務，切成 25 分鐘的番茄鐘來做。',
-          actions: ['挑一件明確、中等難度的任務', '專注 25 分鐘，休息 5 分鐘', '每個番茄鐘結束時起身動一動']
+          main: '適合中等難度任務，用 25 分鐘番茄鐘。',
+          actions: ['選一件中等任務', '專注 25 · 休 5', '起身動一動']
         },
         recover: {
-          main: '現在不適合硬拚深度工作，先做機械性的事，或讓自己恢復一下。',
-          actions: ['處理機械性、低風險的雜務', '小睡 10–20 分鐘，或出去走一走', '先喝一杯水，晚點再測一次']
+          main: '先別硬拚。做機械性的事，或先恢復一下。',
+          actions: ['做機械性雜務', '小睡 10–20 分', '喝水、散步']
         }
       },
-      note: {
-        postLunchDip: '現在是 13–15 點，午後精神下滑是正常的生理節律，不必太在意。'
-      },
+      note: { postLunchDip: '13–15 點的午後低谷很正常。' },
 
       metric: {
         speed: '反應速度（1/s）',
         medianRt: '反應時間中位數',
-        fast10: '最快 10% 平均',
-        slow10: '最慢 10% 平均',
-        lapses: '失誤次數（≥355 ms）',
-        falseStarts: '搶先次數',
+        fast10: '最快 10%',
+        slow10: '最慢 10%',
+        lapses: '失誤（≥355 ms）',
+        falseStarts: '搶先',
         kss: 'KSS 嗜睡度',
         energy: '能量',
         tension: '緊張',
-        sleepHours: '睡眠時數',
+        sleepHours: '睡眠',
         hrv: 'HRV',
         deviceReadiness: '裝置準備度',
         hour: '測量時刻',
@@ -211,13 +188,17 @@
 
       timer: {
         title: '專注中',
-        pick: '要專注多久？',
-        remaining: '剩餘時間',
-        finish: '提前結束並記錄',
+        pick: '專注多久？',
+        finish: '結束並記錄',
         cancel: '取消計時',
-        done: '時間到！',
-        hint: '可以放心切換 App，回來時計時仍然準確。',
-        doneHint: '辛苦了。趁記憶還新鮮，記錄這次的心流吧。'
+        done: '時間到',
+        hint: '可以切換 App，時間照算',
+        ideaPlaceholder: '冒出雜念？丟進罐子',
+        ideaDrop: '丟進罐子',
+        ideasCount: '罐子裡 {n} 個想法',
+        ideasTitle: '雜念罐',
+        ideasEmpty: '還是空的',
+        remove: '刪除'
       },
 
       breathe: {
@@ -225,70 +206,72 @@
         inhale: '吸氣',
         exhale: '吐氣',
         remaining: '剩 {t}',
-        done: '完成了。準備好就開始吧。',
+        done: '好了，開始吧',
         finish: '完成',
         stop: '結束'
       },
 
       flow: {
         title: '記錄心流',
-        session: '對應的測量',
-        sessionOption: '{when} · 準備指數 {index}',
+        session: '哪一次測量',
+        sessionOption: '{when} · {index}',
         logged: '（已記錄）',
-        duration: '實際專注時間（分鐘）',
-        rating: '這段時間的心流程度',
-        ratingLow: '1 完全沒進入狀態',
-        ratingHigh: '10 完全沉浸，忘了時間',
-        task: '任務類型',
-        interruptions: '被打斷次數（選填）',
-        notes: '筆記（選填）',
-        save: '儲存心流記錄',
-        saved: '已儲存。',
-        noSessions: '還沒有可以對應的測量。先完成一次今日測量吧。',
-        needRating: '請選擇心流程度。',
-        overwrite: '這次測量已經有心流記錄，儲存會覆蓋舊的。'
+        duration: '專注了幾分鐘',
+        rating: '有多投入？',
+        ratingLow: '完全沒進入',
+        ratingHigh: '忘了時間',
+        task: '做了什麼',
+        interruptions: '被打斷幾次',
+        notes: '筆記',
+        ideas: '罐子裡的想法',
+        save: '儲存',
+        saved: '已儲存',
+        noSessions: '還沒有測量。',
+        needRating: '選一個分數',
+        overwrite: '會覆蓋上次的紀錄'
       },
 
       history: {
         title: '歷史',
-        tabHorizon: '地平線',
+        tabStars: '星圖',
         tabInsights: '洞察',
         tabTime: '時段',
-        empty: '還沒有紀錄。完成第一次測量後，這裡會畫出你的地平線。',
-        legend: '線的高度 = 準備指數 · ★ = 心流評分（越大越高） · 空心點 = 暫定',
+        empty: '還沒有紀錄',
+        legend: '高度 = 準備指數 · 星星越大 = 心流越高 · 空心 = 暫定',
         prev: '前一次',
         next: '後一次',
-        openCards: '翻開這天的牌',
+        openCards: '看這天的牌',
         flowRating: '心流 {r} / 10',
-        noFlow: '尚未記錄心流',
-        logFlow: '補記心流',
-        chartLabel: '準備指數歷史地平線，共 {n} 次測量。用左右方向鍵瀏覽。',
+        noFlow: '未記錄心流',
+        logFlow: '補記',
+        ideas: '{n} 個雜念',
+        chartLabel: '準備指數星圖，共 {n} 次。用左右鍵瀏覽。',
         pointLabel: '{when}，準備指數 {index}'
       },
 
       insights: {
-        needMore: '還需要 {k} 次心流記錄才能分析（目前 {n} / {total}）。每次專注後記錄心流，就能找出影響你的因素。',
+        needMore: '再記錄 {k} 次心流，就能看出規律',
         title: '對你影響最大的因素',
         allTitle: '所有因素',
-        caveat: '相關不等於因果：這些只是你資料中一起出現的趨勢，背後可能還有其他原因。',
-        method: '方法：Spearman 等級相關，樣本為有心流記錄的測量。',
+        caveat: '相關不等於因果。',
+        method: 'Spearman 等級相關',
         r: 'r = {r}',
         n: 'n = {n}',
-        strength: { negligible: '幾乎無關', weak: '弱相關', moderate: '中度相關', strong: '強相關' },
-        up: '{metric}越高，心流評分通常越高',
-        down: '{metric}越高，心流評分通常越低',
-        hourUp: '越晚測量，心流評分通常越高',
-        hourDown: '越早測量，心流評分通常越高',
-        none: '目前沒有明顯的因素（所有 |r| < 0.1）。',
-        axisNeg: '負相關',
-        axisPos: '正相關'
+        strength: { negligible: '幾乎無關', weak: '弱', moderate: '中等', strong: '強' },
+        up: '{metric}越高，心流越好',
+        down: '{metric}越高，心流越差',
+        hourUp: '越晚測量，心流越好',
+        hourDown: '越早測量，心流越好',
+        none: '還看不出明顯因素',
+        axisNeg: '負',
+        axisPos: '正'
       },
 
       timeOfDay: {
-        title: '你在哪個時段狀態最好？',
-        best: '你的準備指數通常在「{bucket}」最高（平均 {mean}，n = {n}）。',
-        needMore: '每個時段至少要有 2 次測量才能比較。多在不同時段測幾次吧。',
-        mean: '平均 {mean}',
+        title: '你的黃金時段',
+        best: '「{bucket}」最好 · 平均 {mean} · n = {n}',
+        needMore: '每個時段至少 2 次才比較',
+        mean: '{mean}',
         bucket: {
           early: '清晨 5–9', morning: '上午 9–12', midday: '中午 12–14',
           afternoon: '下午 14–18', evening: '傍晚 18–21', night: '夜間 21–5'
@@ -299,29 +282,30 @@
         title: '設定與資料',
         language: '語言',
         data: '資料',
-        count: '目前共有 {n} 次測量，全部存在這個瀏覽器裡。',
-        exportJson: '匯出 JSON 備份',
-        importJson: '匯入 JSON',
+        count: '{n} 筆紀錄，只存在這台裝置',
+        exportJson: '匯出備份',
+        importJson: '匯入備份',
         exportCsv: '匯出 CSV',
         clear: '清除所有資料',
-        importOk: '已匯入：新增 {added} 筆，共 {total} 筆。',
+        importOk: '已匯入：新增 {added}，共 {total}',
         importErr: {
-          parse: '這個檔案不是有效的 JSON。',
-          shape: '檔案格式不對，看起來不是心流羅盤的備份。',
-          version: '這個備份來自較新的版本，請先更新 App。'
+          parse: '檔案不是有效的 JSON',
+          shape: '這不是心流羅盤的備份',
+          version: '備份來自較新版本，請先更新'
         },
-        clearConfirm1: '確定要刪除所有測量與心流記錄嗎？此動作無法復原，建議先匯出備份。',
-        clearConfirm2: '請輸入「{word}」以確認刪除。',
+        clearConfirm1: '刪除全部紀錄？無法復原。',
+        clearConfirm2: '輸入「{word}」確認',
         clearWord: '刪除',
         clearContinue: '繼續',
         clearConfirm: '永久刪除',
-        clearDone: '所有資料已清除。',
-        baselines: '基線狀態',
-        baselineLine: '{device}：{n} / {total} 次',
+        clearDone: '已清除',
+        baselines: '基線',
+        baselineLine: '{device} {n} / {total}',
         about: '指標說明與科學依據',
-        privacy: '所有資料只存在你的瀏覽器裡，不會傳送到任何地方。換手機或清除瀏覽器資料前，請先匯出 JSON 備份。',
-        storageOk: '瀏覽器儲存：正常',
-        storageOff: '瀏覽器儲存：無法使用'
+        tour: '再看一次導覽',
+        privacy: '資料只存在你的瀏覽器，不會上傳。',
+        storageOk: '儲存正常',
+        storageOff: '無法儲存'
       },
 
       about: {
@@ -400,11 +384,11 @@
       disclaimer: 'For personal self-observation only. Not a medical or diagnostic tool.',
       langToggle: '中',
       langToggleLabel: '切換為繁體中文',
-      storageWarning: 'Browser storage is unavailable (private browsing or storage full). The app still works, but nothing will be saved — export a backup before you leave.',
+      storageWarning: "Browser storage is unavailable — nothing will be saved. Export a backup.",
       next: 'Next',
       back: 'Back',
-      home: 'Home',
       close: 'Close',
+      skip: 'Skip',
       cancel: 'Cancel',
       save: 'Save',
       today: 'Today',
@@ -412,31 +396,32 @@
       minutes: '{m} min',
       device: { touch: 'touch', keyboard: 'keyboard', mouse: 'mouse' },
 
+      nav: { home: 'Home', history: 'History', log: 'Log flow', settings: 'Settings' },
+
+      welcome: {
+        slides: [
+          { t: 'Check in before you dive in', s: 'Just 4 minutes' },
+          { t: '3 feelings + 1 reflex', s: 'Tap, then play' },
+          { t: 'Draw three cards', s: "Get today's guide" }
+        ],
+        start: 'Start',
+        label: 'Intro'
+      },
+
       homeView: {
-        title: 'Pre-Flow Check',
-        subtitle: '心流羅盤',
-        intro: 'Spend 4 minutes before focused work to see whether you are ready for flow right now.',
+        ask: 'Ready to flow?',
         start: "Start today's check",
-        logFlow: 'Log flow',
-        history: 'History',
-        settings: 'Settings & data',
         baselineBuilding: 'Building baseline {n} / {total}',
-        baselineReady: 'Baseline ready · last {n} sessions',
-        baselineDevice: ' ({device})',
-        latest: 'Latest: {when} · Readiness {index}',
-        empty: 'No sessions yet. After your first check, this horizon will start tracing your ups and downs.',
-        reminder: "Your check-in from {when} has no flow log yet. Done focusing?",
-        reminderBtn: 'Log it now',
-        timerRunning: 'Focus timer · {time} left',
-        timerDone: "Focus time is up — log how much flow you felt.",
-        timerOpen: 'Open timer',
-        horizonLabel: 'Your past Readiness Index as a horizon; the figure stands at the latest point.'
+        baselineReady: 'Baseline ready',
+        last: 'Last {index}',
+        reminder: 'Last check has no flow log',
+        timerRunning: 'Focusing · {time}',
+        timerDone: 'Focus done · log it'
       },
 
       step: {
-        label: 'Step {n} of 4',
-        s1Title: 'How you are right now',
-        kssQ: 'How sleepy do you feel right now?',
+        label: 'Step {n} of {total}',
+        kssQ: 'How sleepy are you?',
         kss: {
           1: 'Extremely alert',
           3: 'Alert',
@@ -444,78 +429,71 @@
           7: 'Sleepy, but no effort to stay awake',
           9: 'Very sleepy, fighting to stay awake'
         },
-        energyQ: 'How much energy do I have right now?',
-        tensionQ: 'How tense, irritated or anxious am I right now?',
-        low: '1 very low',
-        high: '10 very high',
-        needAll: 'Answer all three to continue.',
-        s2Title: "Today's context",
-        s2Hint: 'Every field is optional.',
-        sleep: 'Hours slept last night',
-        wake: 'Woke up at',
-        awake: 'Awake for {h} h',
-        caffeine: 'Caffeinated drinks today',
-        lastCup: 'Time of last cup',
-        wearable: 'Wearable data (optional)',
+        energyQ: 'How much energy right now?',
+        tensionQ: 'How tense or anxious right now?',
+        low: 'very low',
+        high: 'very high',
+        ctxTitle: 'Today so far',
+        ctxHint: 'All optional',
+        sleep: 'Slept',
+        hoursUnit: 'h',
+        task: "What's next?",
+        more: 'More',
+        wake: 'Woke at',
+        awake: 'Awake {h} h',
+        caffeine: 'Caffeine',
+        cupsUnit: 'cups',
+        lastCup: 'Last cup',
         hrv: 'HRV (ms)',
-        rhr: 'Resting heart rate (bpm)',
-        readiness: 'Device readiness score (0–100)',
-        task: 'What comes next',
-        outOfRange: "Out of range — won't be saved",
+        rhr: 'Resting HR',
+        readiness: 'Device readiness',
+        outOfRange: 'Out of range',
         decrease: 'Decrease',
         increase: 'Increase',
-        clear: 'Clear',
-        s3Title: 'Reaction test',
-        s3Intro: 'For the next 3 minutes, a yellow circle with a counter running up from 0 will appear in the middle at random moments.',
-        s3How: 'As soon as you see it, tap anywhere or press Space — as fast as you can.',
-        s3Tip1: "Find a quiet spot and don't switch apps or tabs during the test.",
-        s3Tip2: 'Responding before the circle appears counts as a false start.',
-        s3Tip3: 'During the test you will only see a thin progress bar at the top.',
-        s3Start: 'Start test',
-        s3Fast: '(test mode: shortened to {s} s)'
+        pvtTitle: 'See the dot? Tap!',
+        pvtSub: '3 minutes · tap anywhere or press Space',
+        pvtNote: 'Too early counts · stay in the app',
+        pvtStart: 'Start',
+        fast: 'Test mode: {s} s'
       },
 
-      task: { deep: 'Deep thinking', creative: 'Creating', learning: 'Learning', admin: 'Admin & chores', other: 'Other' },
+      task: { deep: 'Deep work', creative: 'Creating', learning: 'Learning', admin: 'Admin', other: 'Other' },
 
       pvt: {
         tooEarly: 'Too early!',
-        noResponse: 'No response — continuing…',
+        noResponse: 'Missed — keep going',
         progress: 'Test progress',
-        surfaceLabel: 'Reaction test area: tap or press Space when the yellow circle appears',
-        interruptedTitle: 'The test was interrupted',
-        interruptedBody: 'Switching apps or tabs breaks the timing, so this run has been marked invalid.',
-        retest: 'Retake the test',
-        skip: 'Skip — use self-ratings only',
-        saving: 'Calculating…'
+        surfaceLabel: 'Reaction test: tap or press Space when the yellow dot appears',
+        interruptedTitle: 'Test interrupted',
+        interruptedBody: 'Leaving the screen breaks the timing.',
+        retest: 'Retake',
+        skip: 'Use ratings only',
+        saving: 'Shuffling…'
       },
 
       result: {
-        prompt: 'Take a deep breath and turn the three cards over, one by one',
+        prompt: 'Take a breath. Turn the three cards, one by one',
         cardBack: 'Card {n}, tap to reveal',
-        cardLocked: 'Card {n} (turn the previous card first)',
-        titleAria: 'Pre-Flow Check results',
-        sessionNo: 'No. {n}',
-        archetypeLabel: 'State archetype',
-        readinessLabel: 'Readiness Index',
-        guidanceLabel: "Today's guidance",
+        cardLocked: 'Card {n} (turn the previous one first)',
+        titleAria: "Today's three cards",
         energyTension: 'Energy {e} · Tension {t}',
-        slower: 'Your reactions are {p}% slower than usual',
-        faster: 'Your reactions are {p}% faster than usual',
-        same: 'Your reactions are about the same as usual',
-        lapsesLine: 'Lapses (≥355 ms): {n} — you usually have about {m}',
+        slower: 'Reactions {p}% slower than usual',
+        faster: 'Reactions {p}% faster than usual',
+        same: 'Reactions about as usual',
+        lapsesLine: 'Lapses {n} · usually {m}',
         provisional: 'Provisional — baseline in progress',
-        provisionalHint: 'Based on self-ratings only. {k} more {device} sessions until your personal baseline takes over.',
-        invalidPvt: 'The reaction test was invalid, so the index uses self-ratings only.',
-        breatheBtn: 'Start 2-minute breathing',
+        provisionalHint: '{k} more {device} checks to calibrate',
+        invalidPvt: 'Reflex test invalid — ratings only',
+        breatheBtn: 'Breathe 2 min first',
         details: 'Details',
-        rtChart: 'Reaction-time distribution',
-        rtChartDesc: 'Each bar counts responses in that range; everything right of 355 ms is a lapse.',
+        rtChart: 'Reaction times',
+        rtChartDesc: 'Right of 355 ms = lapse',
         lapseZone: 'lapse ≥355',
-        count: '{n} responses',
+        count: '{n}',
         metric: 'Metric',
         todayCol: 'Today',
-        baselineCol: 'Your baseline',
-        diffCol: 'vs. baseline',
+        baselineCol: 'Usual',
+        diffCol: 'Diff',
         afterBaseline: 'after baseline',
         better: 'better',
         worse: 'worse',
@@ -524,31 +502,15 @@
         logFlow: 'Log flow',
         backHistory: 'Back to history',
         backHome: 'Home',
-        pvtSummary: '{n} valid responses · {f} false starts',
-        weightsUsed: 'Counted in the index'
+        pvtSummary: '{n} valid · {f} false starts',
+        weightsUsed: 'In the index'
       },
 
       archetype: {
-        calmFire: {
-          zh: '平靜之火', en: 'THE CALM FIRE',
-          tag: 'High energy, low tension — the best state for flow',
-          desc: 'Awake without being rushed: the easiest state to sink into deep work.'
-        },
-        storm: {
-          zh: '風暴', en: 'THE STORM',
-          tag: 'High energy, high tension — powerful but easily distracted',
-          desc: 'Plenty of energy, but the tension keeps pulling attention outward. Slow down first.'
-        },
-        stillLake: {
-          zh: '靜湖', en: 'THE STILL LAKE',
-          tag: 'Low energy, low tension — relaxed but sluggish',
-          desc: "Calm, but the engine hasn't warmed up. Move a little and drink some water."
-        },
-        fog: {
-          zh: '迷霧', en: 'THE FOG',
-          tag: 'Low energy, high tension — tired and irritable',
-          desc: 'Tired and unsettled. Pushing through rarely pays off here — look after yourself first.'
-        }
+        calmFire: { zh: '平靜之火', en: 'THE CALM FIRE', tag: 'Best for flow', desc: 'Awake, unhurried.' },
+        storm: { zh: '風暴', en: 'THE STORM', tag: 'Powerful, distractible', desc: 'Lots of energy. Slow down first.' },
+        stillLake: { zh: '靜湖', en: 'THE STILL LAKE', tag: 'Relaxed, sluggish', desc: "Calm, engine not warm yet." },
+        fog: { zh: '迷霧', en: 'THE FOG', tag: 'Tired, irritable', desc: 'Look after yourself first.' }
       },
 
       cards: {
@@ -558,52 +520,54 @@
 
       rec: {
         deep: {
-          main: 'A good moment for your hardest deep work. Start now, and silence notifications.',
-          actions: ['Put the hardest task first', 'Silence notifications and put your phone out of sight', 'Write down one concrete outcome for this session']
+          main: 'Tackle your hardest deep work. Start now, notifications off.',
+          actions: ['Hardest first', 'Notifications off', 'Write one goal']
         },
         breathe: {
-          main: "You're sharp but wound up. Do 2 minutes of slow breathing (in 4 s, out 6 s), then start deep work.",
-          actions: ['Follow the breathing animation for 2 minutes', "Jot down what's on your mind and set it aside", 'Then begin with your most important task']
+          main: "Sharp but tense. Breathe slowly for 2 minutes (in 4 s, out 6 s).",
+          actions: ['Breathe 2 min', 'Jot down worries', 'Then begin']
         },
         steady: {
-          main: 'Good for medium-difficulty tasks. Work in 25-minute pomodoros.',
-          actions: ['Pick one clear, medium-difficulty task', 'Focus 25 minutes, rest 5', 'Stand up and move between pomodoros']
+          main: 'Good for medium tasks, in 25-minute pomodoros.',
+          actions: ['Pick a medium task', 'Focus 25 · rest 5', 'Move between']
         },
         recover: {
-          main: "Not the moment to force deep work. Do mechanical tasks, or recover first.",
-          actions: ['Handle mechanical, low-stakes tasks', 'Take a 10–20 minute nap or a short walk', 'Drink a glass of water and check again later']
+          main: "Don't force it. Do mechanical tasks, or recover first.",
+          actions: ['Mechanical tasks', 'Nap 10–20 min', 'Water, a walk']
         }
       },
-      note: {
-        postLunchDip: "It's between 13:00 and 15:00 — a post-lunch dip in alertness is normal."
-      },
+      note: { postLunchDip: 'A 13:00–15:00 dip is normal.' },
 
       metric: {
-        speed: 'Response speed (1/s)',
+        speed: 'Speed (1/s)',
         medianRt: 'Median RT',
-        fast10: 'Fastest 10% mean',
-        slow10: 'Slowest 10% mean',
+        fast10: 'Fastest 10%',
+        slow10: 'Slowest 10%',
         lapses: 'Lapses (≥355 ms)',
         falseStarts: 'False starts',
         kss: 'KSS sleepiness',
         energy: 'Energy',
         tension: 'Tension',
-        sleepHours: 'Sleep hours',
+        sleepHours: 'Sleep',
         hrv: 'HRV',
         deviceReadiness: 'Device readiness',
         hour: 'Time of day',
-        index: 'Readiness Index'
+        index: 'Readiness'
       },
 
       timer: {
         title: 'Focusing',
-        pick: 'How long will you focus?',
-        remaining: 'Time left',
-        finish: 'Finish early & log',
+        pick: 'How long?',
+        finish: 'Finish & log',
         cancel: 'Cancel timer',
-        done: "Time's up!",
-        hint: 'You can switch apps — the timer stays accurate.',
-        doneHint: 'Nice work. Log your flow while it is still fresh.'
+        done: "Time's up",
+        hint: 'Switch apps freely — time keeps running',
+        ideaPlaceholder: 'Stray thought? Drop it in the jar',
+        ideaDrop: 'Drop',
+        ideasCount: '{n} in the jar',
+        ideasTitle: 'Idea jar',
+        ideasEmpty: 'Empty for now',
+        remove: 'Remove'
       },
 
       breathe: {
@@ -611,70 +575,72 @@
         inhale: 'Breathe in',
         exhale: 'Breathe out',
         remaining: '{t} left',
-        done: 'Done. Start whenever you are ready.',
+        done: 'Done. Go.',
         finish: 'Done',
         stop: 'Stop'
       },
 
       flow: {
-        title: 'Log your flow',
-        session: 'Which check-in',
-        sessionOption: '{when} · Readiness {index}',
+        title: 'Log flow',
+        session: 'Which check',
+        sessionOption: '{when} · {index}',
         logged: ' (logged)',
-        duration: 'Actual focus time (minutes)',
-        rating: 'How much flow did you feel?',
-        ratingLow: '1 not at all',
-        ratingHigh: '10 fully absorbed, lost track of time',
-        task: 'Task type',
-        interruptions: 'Interruptions (optional)',
-        notes: 'Notes (optional)',
-        save: 'Save flow log',
-        saved: 'Saved.',
-        noSessions: "No check-ins yet. Do today's check first.",
-        needRating: 'Pick a flow rating.',
-        overwrite: 'This check-in already has a flow log; saving will replace it.'
+        duration: 'Minutes focused',
+        rating: 'How absorbed?',
+        ratingLow: 'not at all',
+        ratingHigh: 'lost in it',
+        task: 'Task',
+        interruptions: 'Interruptions',
+        notes: 'Notes',
+        ideas: 'From your idea jar',
+        save: 'Save',
+        saved: 'Saved',
+        noSessions: 'No checks yet.',
+        needRating: 'Pick a score',
+        overwrite: 'Replaces the previous log'
       },
 
       history: {
         title: 'History',
-        tabHorizon: 'Horizon',
+        tabStars: 'Stars',
         tabInsights: 'Insights',
-        tabTime: 'Time of day',
-        empty: 'No sessions yet. After your first check, your horizon will appear here.',
-        legend: 'Height = Readiness Index · ★ = flow rating (bigger = higher) · hollow = provisional',
+        tabTime: 'Time',
+        empty: 'Nothing yet',
+        legend: 'Height = readiness · bigger star = more flow · hollow = provisional',
         prev: 'Previous',
         next: 'Next',
-        openCards: "See this day's cards",
+        openCards: "See that day's cards",
         flowRating: 'Flow {r} / 10',
-        noFlow: 'No flow log yet',
-        logFlow: 'Log flow',
-        chartLabel: 'Readiness Index history horizon, {n} sessions. Use the arrow keys to browse.',
-        pointLabel: '{when}, Readiness {index}'
+        noFlow: 'No flow log',
+        logFlow: 'Log it',
+        ideas: '{n} stray thoughts',
+        chartLabel: 'Readiness star map, {n} sessions. Use arrow keys to browse.',
+        pointLabel: '{when}, readiness {index}'
       },
 
       insights: {
-        needMore: 'Log flow for {k} more sessions to unlock insights ({n} / {total}). Log flow after each focus block to learn what drives it.',
-        title: 'What affects your flow most',
+        needMore: 'Log flow {k} more times to see patterns',
+        title: 'What drives your flow',
         allTitle: 'All factors',
-        caveat: 'Correlation is not causation: these are patterns that show up together in your data, and something else may explain them.',
-        method: 'Method: Spearman rank correlation over check-ins that have a flow log.',
+        caveat: 'Correlation is not causation.',
+        method: 'Spearman rank correlation',
         r: 'r = {r}',
         n: 'n = {n}',
         strength: { negligible: 'negligible', weak: 'weak', moderate: 'moderate', strong: 'strong' },
-        up: 'Higher {metric} tends to go with more flow',
-        down: 'Higher {metric} tends to go with less flow',
-        hourUp: 'Later check-ins tend to go with more flow',
-        hourDown: 'Earlier check-ins tend to go with more flow',
-        none: 'No clear factor yet (all |r| < 0.1).',
-        axisNeg: 'negative',
-        axisPos: 'positive'
+        up: 'More {metric}, more flow',
+        down: 'More {metric}, less flow',
+        hourUp: 'Later checks, more flow',
+        hourDown: 'Earlier checks, more flow',
+        none: 'No clear factor yet',
+        axisNeg: '−',
+        axisPos: '+'
       },
 
       timeOfDay: {
-        title: 'When are you sharpest?',
-        best: 'Your Readiness Index is usually highest in the {bucket} slot (mean {mean}, n = {n}).',
-        needMore: 'Each time slot needs at least 2 check-ins to compare. Try checking in at different times.',
-        mean: 'mean {mean}',
+        title: 'Your best hours',
+        best: '{bucket} is best · avg {mean} · n = {n}',
+        needMore: 'Need 2+ checks per slot',
+        mean: '{mean}',
         bucket: {
           early: 'Early 5–9', morning: 'Morning 9–12', midday: 'Midday 12–14',
           afternoon: 'Afternoon 14–18', evening: 'Evening 18–21', night: 'Night 21–5'
@@ -682,32 +648,33 @@
       },
 
       settings: {
-        title: 'Settings & data',
+        title: 'Settings',
         language: 'Language',
         data: 'Data',
-        count: '{n} sessions, all stored in this browser.',
-        exportJson: 'Export JSON backup',
-        importJson: 'Import JSON',
+        count: '{n} sessions, on this device only',
+        exportJson: 'Export backup',
+        importJson: 'Import backup',
         exportCsv: 'Export CSV',
         clear: 'Clear all data',
-        importOk: 'Imported: {added} new, {total} total.',
+        importOk: 'Imported: {added} new, {total} total',
         importErr: {
-          parse: "This file isn't valid JSON.",
-          shape: "This doesn't look like a Pre-Flow Check backup.",
-          version: 'This backup comes from a newer version — please update the app first.'
+          parse: "Not a valid JSON file",
+          shape: "Not a Pre-Flow Check backup",
+          version: 'Backup is from a newer version — update first'
         },
-        clearConfirm1: 'Delete every check-in and flow log? This cannot be undone. Export a backup first.',
-        clearConfirm2: 'Type “{word}” to confirm.',
+        clearConfirm1: 'Delete everything? This cannot be undone.',
+        clearConfirm2: 'Type “{word}” to confirm',
         clearWord: 'DELETE',
         clearContinue: 'Continue',
         clearConfirm: 'Delete forever',
-        clearDone: 'All data cleared.',
+        clearDone: 'Cleared',
         baselines: 'Baselines',
-        baselineLine: '{device}: {n} / {total} sessions',
+        baselineLine: '{device} {n} / {total}',
         about: 'About the measures',
-        privacy: 'All data stays in your browser and is never sent anywhere. Export a JSON backup before switching phones or clearing browser data.',
-        storageOk: 'Browser storage: OK',
-        storageOff: 'Browser storage: unavailable'
+        tour: 'Replay intro',
+        privacy: 'Your data stays in this browser. Nothing is uploaded.',
+        storageOk: 'Storage OK',
+        storageOff: 'Storage unavailable'
       },
 
       about: {
