@@ -89,6 +89,7 @@
     ['flow_task_type', (s) => s.flow && s.flow.taskType],
     ['flow_interruptions', (s) => s.flow && s.flow.interruptions],
     ['flow_notes', (s) => s.flow && s.flow.notes],
+    ['ideas', (s) => Array.isArray(s.ideas) ? s.ideas.map((x) => x.text).join(' | ') : ''],
     ['pvt_rts_ms', (s) => s.pvt && Array.isArray(s.pvt.trials)
       ? s.pvt.trials.filter((t) => t.kind !== 'falseStart').map((t) => t.rtMs).join(';') : '']
   ];

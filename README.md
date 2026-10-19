@@ -5,21 +5,33 @@
 **Live demo:** https://remmin0.github.io/pre-flow-check/
 
 <p>
-  <img src="docs/screenshots/mobile-home.png" alt="Home: a hand-drawn horizon traced from past Readiness Index values, with a stick figure standing at the latest point" width="240">
-  <img src="docs/screenshots/mobile-result.png" alt="Results: three hand-inked riso cards — state archetype, Readiness Index and today's guidance" width="240">
-  <img src="docs/screenshots/mobile-step1.png" alt="Step 1: large tappable buttons for the Karolinska Sleepiness Scale, energy and tension" width="240">
+  <img src="docs/screenshots/mobile-home.png" alt="Home: an oracle eye in a turning compass, “Ready to flow?” and one start button" width="200">
+  <img src="docs/screenshots/mobile-check.png" alt="Guided check: a sleepy eye whose lids droop with the sleepiness rating" width="200">
+  <img src="docs/screenshots/mobile-cards.png" alt="Card table: three revealed tarot-style cards — archetype, Readiness Index, today's guidance" width="200">
+  <img src="docs/screenshots/mobile-focus.png" alt="Focus mode: a hand-drawn desk scene, countdown and the idea jar" width="200">
 </p>
-<img src="docs/screenshots/desktop-result.png" alt="Desktop results page" width="800">
+<img src="docs/screenshots/desktop-cards.png" alt="Desktop card table" width="800">
 
 UI in Traditional Chinese (default) and English — switch with the button in the top-right corner.
 
 ## What it does
 
-1. **How you are right now (≈30 s)** — Karolinska Sleepiness Scale (1–9), energy (1–10) and tension (1–10), each a single tap.
-2. **Context (optional)** — hours slept, wake time, caffeine, wearable HRV / resting HR / readiness score, and what you're about to work on.
-3. **Reaction test (3 min)** — the brief Psychomotor Vigilance Test (PVT-B): tap or press Space whenever the yellow circle appears.
-4. **Reveal** — turn over three cards: your *state archetype*, your *Readiness Index* (0–100, compared with your personal baseline) and *today's guidance*, plus detailed numbers. Optionally start a 25 / 50 / 90-minute focus timer.
-5. **After work** — log how much flow you actually felt (1–10). After ten logs, *Insights* shows which factors move with your flow.
+1. **Intro (first launch)** — three short screens: what it is, how it works, what you get.
+2. **Three feelings, one per screen** — sleepiness (KSS 1–9), energy and tension (1–10). Each has a big living picture that reacts as you tap: an eye that grows sleepy, a flame that grows, a ring that trembles with tension. Picking a number moves you on.
+3. **Today so far (optional)** — sleep, what you're about to do; wake time, caffeine and wearable numbers tucked under “More”.
+4. **Reflex test (3 min)** — the brief Psychomotor Vigilance Test (PVT-B): tap or press Space whenever the yellow dot appears.
+5. **The card table** — three cards are dealt onto the table; turn them over one by one to read your *state archetype*, your *Readiness Index* (0–100 against your own baseline) and *today's guidance*. The cards come alive once turned: eyes blink and look around, the flame flickers, the lake ripples, the gauge fills.
+6. **Focus mode (optional)** — a 25 / 50 / 90-minute timer in a calm paper-and-ink scene. Stray thoughts go into the **idea jar**: type one, and it flies into the jar as a paper slip so you can get back to work.
+7. **After work** — log how much flow you felt (1–10) along with the jar's ideas. After ten logs, *Insights* shows which factors move with your flow.
+
+## Design
+
+Two worlds share one motion system:
+
+- **The tarot table** (home, the guided check, the card reveal, history, settings): deep tinted night with flat, saturated colour — indigo, mustard, orange-red, forest green, lavender, cream — and original geometric illustrations whose eyes, flames and ripples move.
+- **The paper journal** (focus mode, flow log): warm paper with ink line drawings that draw themselves on.
+
+Motion uses transform/opacity only with custom easing curves, view transitions between screens (slide between questions, a circular reveal into the card table) and respects `prefers-reduced-motion`. Copy is kept to a few words per screen. All artwork is original SVG drawn in code; the visual direction was inspired by, not copied from, the reference images in the brief. Design skills used during the redesign live in `.claude/skills/`.
 
 ## Why
 
@@ -94,9 +106,10 @@ Tests:
 
 ```sh
 node --test tests/unit/*.test.js     # scoring, baseline, correlation, storage
-node tests/e2e/run.js                # Playwright: screenshots at 390×844 and 1440×900,
-                                     # no horizontal scroll, ≥44px tap targets, full flow
-                                     # with automated PVT taps, export → import round trip
+node tests/e2e/run.js                # Playwright: every screen at 390×844 and 1440×900 in both
+                                     # languages (no horizontal scroll, ≥44px tap targets), the full
+                                     # guided flow with automated PVT taps, card reveal, idea jar,
+                                     # export → clear → import round trip, keyboard-only pass
 ```
 
 **GitHub Pages:** in the repository go to *Settings → Pages*, choose *Deploy from a branch*, branch `main`, folder `/ (root)`, and save. The site appears at `https://<user>.github.io/pre-flow-check/` a minute later. All paths are relative, so it works under a sub-path. To install it, open the site on your phone and use *Add to Home Screen* (iOS Safari: Share → Add to Home Screen; Android Chrome: ⋮ → Install app).
