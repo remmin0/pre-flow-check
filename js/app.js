@@ -1799,7 +1799,24 @@
   checkTimer();
 
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && !params.has('nosw')) {
-    window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+    // When a new version takes over, reload once so the new files are used straight away —
+    // but never in the middle of a reaction test or a focus block.
+    const hadController = !!navigator.serviceWorker.controller;
+    let reloading = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!hadController || reloading) return;
+      if (document.body.classList.contains('pvt-lock') || app.route.name === 'timer') return;
+      reloading = true;
+      location.reload();
+    });
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+        .then((reg) => {
+          // Check for a new version whenever the app comes back to the foreground.
+          document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') reg.update().catch(() => {}); });
+        })
+        .catch(() => {});
+    });
   }
 
   // Exposed for automated tests only.

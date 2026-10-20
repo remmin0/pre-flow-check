@@ -1,9 +1,11 @@
 /*
  * Pre-Flow Check — service worker.
- * App shell: cache-first with a versioned cache (bump VERSION on every release).
+ * App files: network-first (always fresh when online), with the cache as the offline fallback.
+ * The install step bypasses the browser's HTTP cache so a new version never stores stale files.
  * Google Fonts: stale-while-revalidate, so fonts work offline after the first online visit.
+ * Bump VERSION on every release.
  */
-const VERSION = 'pfc-v2';
+const VERSION = 'pfc-v3';
 const SHELL = [
   './',
   './index.html',
@@ -26,7 +28,11 @@ const SHELL = [
 const FONT_CACHE = 'pfc-fonts';
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(VERSION).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  event.waitUntil(
+    caches.open(VERSION)
+      .then((c) => c.addAll(SHELL.map((u) => new Request(u, { cache: 'reload' }))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', (event) => {
@@ -57,22 +63,17 @@ self.addEventListener('fetch', (event) => {
 
   if (url.origin !== self.location.origin) return;
 
-  // Navigations: serve the cached shell (the app routes with #hash).
-  if (req.mode === 'navigate') {
-    event.respondWith(
-      fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(VERSION).then((c) => c.put('./index.html', copy));
-        return res;
-      }).catch(() => caches.match('./index.html'))
-    );
-    return;
-  }
-
+  // Network first; fall back to the cache when offline. Navigations fall back to the shell.
   event.respondWith(
-    caches.match(req, { ignoreSearch: true }).then((hit) => hit || fetch(req).then((res) => {
-      if (res.ok) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(req, copy)); }
+    // Revalidate with the server (cheap 304s) instead of trusting the browser's HTTP cache.
+    // A navigation request can't be re-created with options, so it is fetched by URL.
+    (req.mode === 'navigate' ? fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }) : fetch(req, { cache: 'no-cache' })).then((res) => {
+      if (res.ok) {
+        const copy = res.clone();
+        caches.open(VERSION).then((c) => c.put(req.mode === 'navigate' ? './index.html' : req, copy));
+      }
       return res;
-    }))
+    }).catch(() => caches.match(req, { ignoreSearch: true })
+      .then((hit) => hit || (req.mode === 'navigate' ? caches.match('./index.html') : undefined)))
   );
 });
